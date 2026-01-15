@@ -31,6 +31,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+dist/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -447,8 +448,4 @@ $RECYCLE.BIN/
 ##
 ## Visual Studio Code
 ##
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+.vscode/
