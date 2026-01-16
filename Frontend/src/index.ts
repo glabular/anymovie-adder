@@ -7,8 +7,30 @@ const checkboxes = document.querySelectorAll(
 ) as NodeListOf<HTMLInputElement>;
 
 const clearButton = document.getElementById("clear") as HTMLButtonElement;
+const addButton = document.getElementById("add") as HTMLButtonElement;
 
 clearButton.addEventListener("click", clearInput);
+addButton.addEventListener("click", sendToAnytype)
+
+function sendToAnytype() {
+    const selectedCategories: string[] = [];
+
+    checkboxes.forEach(cb => {
+        if (cb.checked) {
+            selectedCategories.push(cb.value);
+        }
+    });
+
+    const movieData = {
+        titleEn: titleInput.value,
+        description: desctiptionInput.value,
+        releaseYear: yearInput.value,
+        categories: selectedCategories
+    }
+
+    console.log(movieData);
+    
+}
 
 function clearInput() {
     titleInput.value = "";
