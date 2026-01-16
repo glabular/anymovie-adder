@@ -13,11 +13,19 @@ clearButton.addEventListener("click", clearInput);
 addButton.addEventListener("click", sendToAnytype)
 
 function sendToAnytype() {
+    const title = titleInput.value;
     const year = yearInput.value;
     const selectedCategories: string[] = [];
     
+    if (!isTitleValid(title)) {
+        alert("Введите название фильма");
+
+        return;
+    }
+
     if (!isYearValid(year)) {
         alert("Год должен состоять из 4 цифр");
+        
         return;        
     }
 
@@ -54,4 +62,8 @@ function isYearValid(year: string): boolean {
   }
 
   return /^\d{4}$/.test(year);
+}
+
+function isTitleValid(title:string): boolean {
+    return title.trim().length > 0;
 }
