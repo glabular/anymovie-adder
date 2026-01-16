@@ -19,13 +19,15 @@ function sendToAnytype() {
     
     if (!isTitleValid(title)) {
         alert("Введите название фильма");
+        titleInput.focus();
 
         return;
     }
 
     if (!isYearValid(year)) {
         alert("Год должен состоять из 4 цифр");
-        
+        yearInput.focus();
+
         return;        
     }
 
