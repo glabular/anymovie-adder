@@ -26,7 +26,8 @@ function sendToAnytype() {
 
     if (!isYearValid(year)) {
         alert("Год должен состоять из 4 цифр");
-        yearInput.focus();
+        yearInput.focus();        
+        yearInput.select();
 
         return;        
     }
