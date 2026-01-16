@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,6 +15,67 @@
     <title>AnyMovie Adder</title>
   </head>
   <body>
-    <h1>Montserrat font added!</h1>
+    <div class="main-container">
+      <div class="left-container">
+        <img
+          class="movie-poster"
+          src="images/Avatar_Profile.webp"
+          alt="Avatar movie poster"
+          loading="lazy"
+        />
+      </div>
+      <div class="right-container">
+        <header class="header">
+          <h1>Добавить фильм/сериал в базу данных Anytype</h1>
+
+          <div class="movie-title">
+            <label for="movie-title-en">Тайтл на английском</label>
+            <input
+              type="text"
+              id="movie-title-en"
+              placeholder="The Secret Life of Pets 2"
+            />
+          </div>
+
+          <div class="movie-description">
+            <label for="movie-description">Почему стоит посмотреть?</label>
+            <input
+              type="text"
+              id="movie-description"
+              placeholder="Тупой мультик с парой хороших моментов"
+            />
+          </div>
+
+          <div class="release-year">
+            <label for="release-year">Год выхода</label>
+            <input type="text" id="release-year" placeholder="2019" />
+          </div>
+
+          <fieldset class="category-group">
+            <legend>Категория</legend>
+
+            <div class="checkbox-container">
+              <input type="checkbox" id="animation" value="animation" />
+              <label for="animation">Анимация</label>
+
+              <input type="checkbox" id="movie" value="movie" />
+              <label for="movie">Фильм</label>
+
+              <input type="checkbox" id="series" value="series" />
+              <label for="series">Сериал</label>
+
+              <input type="checkbox" id="anime" value="anime" />
+              <label for="anime">Аниме</label>
+            </div>
+          </fieldset>
+        </header>
+        <footer class="footer">
+          <div class="buttons">
+            <button id="clear">Очистить</button>
+            <button id="add">Добавить</button>
+          </div>
+        </footer>
+      </div>
+    </div>
   </body>
 </html>
