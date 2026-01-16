@@ -13,7 +13,13 @@ clearButton.addEventListener("click", clearInput);
 addButton.addEventListener("click", sendToAnytype)
 
 function sendToAnytype() {
+    const year = yearInput.value;
     const selectedCategories: string[] = [];
+    
+    if (!isYearValid(year)) {
+        alert("Год должен состоять из 4 цифр");
+        return;        
+    }
 
     checkboxes.forEach(cb => {
         if (cb.checked) {
@@ -40,4 +46,12 @@ function clearInput() {
     checkboxes.forEach(cb => {
         cb.checked = false;
     });
+}
+
+function isYearValid(year: string): boolean {
+  if (year.trim() === "") {
+    return true; // optional field
+  }
+
+  return /^\d{4}$/.test(year);
 }
