@@ -43,10 +43,11 @@ function sendToAnytype() {
         description: desctiptionInput.value,
         releaseYear: yearInput.value,
         categories: selectedCategories
-    }
+    }    
 
     console.log(movieData);
     
+    clearInput();
 }
 
 function clearInput() {
