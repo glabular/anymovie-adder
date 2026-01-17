@@ -33,6 +33,7 @@ body {
     font-size: 14px;
     height: 100vh;
     justify-items: center;
+    overflow: hidden;
 }
 
 .header {
@@ -171,4 +172,45 @@ body {
 .checkbox-container label:hover {
     border: 1px solid rgba(0, 0, 0, 0.6);
     transition: border 0.2s ease, background-color 0.3s ease;
+}
+
+.toast {
+    position: absolute;
+    width: 350px;
+    padding: 20px;
+    right: 0;
+    top: 5%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #fff;
+    color: #000;
+    border-radius: 5px;
+    transform: translateX(110%);
+    transition: 0.7s;
+}
+
+.toast-content {
+    flex: 1;
+}
+
+.toast i {
+    font-size: 40px;
+    color: #c10b0b;
+    margin-right: 15px;
+}
+
+.toast button {
+    position: absolute;
+    right: 20px;
+    top: 5px;
+    border: none;
+    background: transparent;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.toast h4,
+.toast p {
+    user-select: none;
 }

@@ -11,10 +11,23 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
       rel="stylesheet"
     />
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
 
     <title>AnyMovie Adder</title>
   </head>
   <body>
+    <div id="toast" class="toast">
+      <i class="bx bxs-x-square"></i>
+      <div class="toast-content">
+        <h4 class="toast-title"></h4>
+        <p class="toast-message"></p>
+      </div>
+      <button class="toast-close" id="toast-close">&times;</button>
+    </div>
+
     <div class="main-container">
       <div class="left-container">
         <img

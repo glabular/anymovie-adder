@@ -8,9 +8,16 @@ const checkboxes = document.querySelectorAll(
 
 const clearButton = document.getElementById("clear") as HTMLButtonElement;
 const addButton = document.getElementById("add") as HTMLButtonElement;
+const toast = document.getElementById('toast');
+const toastTitle = toast?.querySelector('.toast-title');
+const toastMessage = toast?.querySelector('.toast-message');
+const toastCloseButton = document.getElementById('toast-close') as HTMLButtonElement;
 
 clearButton.addEventListener("click", clearInput);
-addButton.addEventListener("click", sendToAnytype)
+addButton.addEventListener("click", sendToAnytype);
+toastCloseButton.addEventListener("click", hideToast);
+
+let toastTimeout: number | undefined;
 
 function sendToAnytype() {
     const title = titleInput.value;
@@ -18,14 +25,14 @@ function sendToAnytype() {
     const selectedCategories: string[] = [];
     
     if (!isTitleValid(title)) {
-        alert("Введите название фильма");
+        showToast('Ошибка', 'Необходимо ввести тайтл');
         titleInput.focus();
 
         return;
     }
 
-    if (!isYearValid(year)) {
-        alert("Год должен состоять из 4 цифр");
+    if (!isYearValid(year)) {        
+        showToast('Ошибка', "Год должен состоять из 4 цифр");
         yearInput.focus();        
         yearInput.select();
 
@@ -62,7 +69,7 @@ function clearInput() {
 
 function isYearValid(year: string): boolean {
   if (year.trim() === "") {
-    return true; // optional field
+    return true; // Year is optional field
   }
 
   return /^\d{4}$/.test(year);
@@ -70,4 +77,34 @@ function isYearValid(year: string): boolean {
 
 function isTitleValid(title:string): boolean {
     return title.trim().length > 0;
+}
+
+function showToast(title:string, message: string) {
+    if (!(toast instanceof HTMLElement)) {
+        throw new Error('Toast element not found');
+    }
+    if (toastTitle instanceof HTMLElement) {
+        toastTitle.textContent = title;
+    }
+    if (toastMessage instanceof HTMLElement) {
+        toastMessage.textContent = message;
+    }
+
+    toast.style.transform = "translateX(0px)";
+
+    if (toastTimeout) {
+        clearTimeout(toastTimeout);
+    }
+
+    toastTimeout = window.setTimeout(() => {
+        hideToast();
+    }, 3500);
+}
+
+function hideToast () {  
+    if (!(toast instanceof HTMLElement)) {
+        throw new Error('Toast element not found');
+    }  
+    
+    toast.style.transform = "translateX(110%)";
 }
