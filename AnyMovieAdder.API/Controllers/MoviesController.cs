@@ -1,5 +1,6 @@
 ﻿using AnyMovieAdder.API.DTOs;
 using AnyMovieAdder.API.Models;
+using AnyMovieAdder.API.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +10,13 @@ namespace AnyMovieAdder.API.Controllers;
 [ApiController]
 public sealed class MoviesController : ControllerBase
 {
+    private AnytypeService _anytypeService;
+
+    public MoviesController(AnytypeService anytypeService)
+    {
+        _anytypeService = anytypeService ?? throw new ArgumentNullException(nameof(anytypeService));
+    }
+
     [HttpPost]
     public async Task<IActionResult> AddMovieAsync([FromBody] AddMovieRequest request)
     {
