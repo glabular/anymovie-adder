@@ -9,7 +9,7 @@ namespace AnyMovieAdder.API.Controllers;
 [ApiController]
 public sealed class MoviesController : ControllerBase
 {
-    [HttpPost("add")]
+    [HttpPost]
     public async Task<IActionResult> AddMovieAsync([FromBody] AddMovieRequest request)
     {
         if (request is null)
