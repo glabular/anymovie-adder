@@ -43,7 +43,7 @@ public sealed class MoviesController : ControllerBase
             Categories = request.Categories ?? []
         };
 
-        await Task.Delay(100);
+        await _anytypeService.AddMovieAsync(movie);
 
         return StatusCode(StatusCodes.Status201Created, movie);
     }
