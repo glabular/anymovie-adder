@@ -12,6 +12,11 @@ public sealed class MoviesController : ControllerBase
     [HttpPost("add")]
     public async Task<IActionResult> AddMovieAsync([FromBody] AddMovieRequest request)
     {
+        if (request is null)
+        {
+            return BadRequest("Request body is null.");
+        }
+
         await Task.Delay(100);
 
         return Ok();
