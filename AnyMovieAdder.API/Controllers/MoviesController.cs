@@ -17,8 +17,21 @@ public sealed class MoviesController : ControllerBase
             return BadRequest("Request body is null.");
         }
 
+        if (string.IsNullOrWhiteSpace(request.Title))
+        {
+            return BadRequest("Title is required.");
+        }
+
+        var movie = new Movie
+        {
+            Title = request.Title.Trim(),
+            Description = request.Description,
+            ReleaseYear = request.ReleaseYear,
+            Categories = request.Categories ?? []
+        };
+
         await Task.Delay(100);
 
-        return Ok();
+        return StatusCode(StatusCodes.Status201Created, movie);
     }
 }
