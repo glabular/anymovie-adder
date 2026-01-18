@@ -6,11 +6,13 @@ namespace AnyMovieAdder.API.Services;
 
 public sealed class AnytypeService
 {
-    private readonly AnytypeClient _client;
+    private AnytypeClient? _client;
 
-    public AnytypeService(string ApiKey)
+    public bool IsAuthorized => _client is not null;
+
+    public void Authorize(string apiKey)
     {
-        _client = new AnytypeClient(ApiKey);
+        _client = new AnytypeClient(apiKey);
     }
 
     public async Task AddMovieAsync(Movie movie)
