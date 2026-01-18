@@ -42,4 +42,34 @@ public sealed class MoviesController : ControllerBase
 
         return StatusCode(StatusCodes.Status201Created, movie);
     }
+
+    [HttpPost("authorize")]
+    public IActionResult Authorize()
+    {
+        try
+        {
+            if (!Request.Headers.TryGetValue("Authorization", out var authHeader))
+            {
+                return BadRequest("Authorization header required.");
+            }
+
+            var value = authHeader.ToString().Trim();
+
+            if (!value.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+            {
+                return BadRequest("Authorization must be 'Bearer <key>'.");
+            }
+
+            var apiKey = value["Bearer ".Length..].Trim();
+
+            _anytypeService.Authorize(apiKey);
+
+            return Ok("Authorized successfully.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"An unexpected error occurred while authorizing:\n{ex.Message}");
+        }
+    }
 }
