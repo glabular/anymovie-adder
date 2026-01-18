@@ -1,3 +1,4 @@
+using AnyMovieAdder.API.Services;
 
 namespace AnyMovieAdder.API;
 
@@ -21,6 +22,8 @@ public class Program
                       .AllowAnyMethod()
             );
         });
+
+        builder.Services.AddSingleton<AnytypeService>();
 
         var app = builder.Build();
 
