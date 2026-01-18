@@ -1,6 +1,6 @@
 ﻿namespace AnyMovieAdder.API.Models;
 
-public class Movie
+public sealed class Movie
 {
     public required string Title { get; set; }
 
