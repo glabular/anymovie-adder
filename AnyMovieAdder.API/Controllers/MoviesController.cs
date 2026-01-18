@@ -1,4 +1,5 @@
-﻿using AnyMovieAdder.API.Models;
+﻿using AnyMovieAdder.API.DTOs;
+using AnyMovieAdder.API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,7 +10,7 @@ namespace AnyMovieAdder.API.Controllers;
 public sealed class MoviesController : ControllerBase
 {
     [HttpPost("add")]
-    public async Task<IActionResult> AddMovieAsync([FromBody] Movie movie)
+    public async Task<IActionResult> AddMovieAsync([FromBody] AddMovieRequest request)
     {
         await Task.Delay(100);
 
