@@ -30,6 +30,11 @@ public sealed class MoviesController : ControllerBase
             return BadRequest("Title is required.");
         }
 
+        if (!_anytypeService.IsAuthorized)
+        {
+            return BadRequest("You are not authorized.");
+        }
+
         var movie = new Movie
         {
             Title = request.Title.Trim(),
