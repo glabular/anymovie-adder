@@ -17,6 +17,18 @@ clearButton.addEventListener("click", clearInput);
 addButton.addEventListener("click", sendToAnytype);
 toastCloseButton.addEventListener("click", hideToast);
 
+// Process Enter key on text fields.
+const inputs = [titleInput, desctiptionInput, yearInput];
+
+inputs.forEach(input => {
+    input.addEventListener("keydown", (e: KeyboardEvent) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            sendToAnytype();
+        }
+    });
+});
+
 let toastTimeout: number | undefined;
 
 function sendToAnytype() {
@@ -55,6 +67,8 @@ function sendToAnytype() {
     console.log(movieData);
     
     clearInput();
+    
+    titleInput.focus();
 }
 
 function clearInput() {
