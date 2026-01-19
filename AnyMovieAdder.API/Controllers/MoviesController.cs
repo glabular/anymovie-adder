@@ -10,7 +10,7 @@ namespace AnyMovieAdder.API.Controllers;
 [ApiController]
 public sealed class MoviesController : ControllerBase
 {
-    private AnytypeService _anytypeService;
+    private readonly AnytypeService _anytypeService;
 
     public MoviesController(AnytypeService anytypeService)
     {
