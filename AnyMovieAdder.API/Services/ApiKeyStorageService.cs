@@ -37,12 +37,12 @@ public sealed class ApiKeyStorageService
     /// </summary>
     public string Load()
     {
-        if (Exists())
+        if (!Exists())
         {
             throw new FileNotFoundException("API key file not found.", _filePath);
         }
 
-        return File.ReadAllText(FileName).Trim();
+        return File.ReadAllText(_filePath).Trim();
     }
 
     /// <summary>
