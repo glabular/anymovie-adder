@@ -2,14 +2,34 @@
 
 public sealed class ApiKeyStorageService
 {
+    private const string FolderName = "AnyMovieAdder";
     private const string FileName = "Anytype API key.dat";
+    private readonly string _filePath;
+
+    public ApiKeyStorageService()
+    {
+        var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+        var directoryPath = Path.Combine(appDataPath, FolderName);
+
+        if (!Directory.Exists(directoryPath))
+        {
+            Directory.CreateDirectory(directoryPath);
+        }
+
+        _filePath = Path.Combine(directoryPath, FileName);
+    }
 
     /// <summary>
     /// Saves (or overwrites) the API key in a file.
     /// </summary>
     public void Save(string apiKey)
     {
-        File.WriteAllText(FileName, apiKey.Trim());
+        if (string.IsNullOrWhiteSpace(apiKey))
+        {
+            throw new ArgumentException("API key cannot be empty.");
+        }
+
+        File.WriteAllText(_filePath, apiKey.Trim());
     }
 
     /// <summary>
@@ -17,9 +37,9 @@ public sealed class ApiKeyStorageService
     /// </summary>
     public string Load()
     {
-        if (!File.Exists(FileName))
+        if (Exists())
         {
-            throw new InvalidOperationException("API key file not found.");
+            throw new FileNotFoundException("API key file not found.", _filePath);
         }
 
         return File.ReadAllText(FileName).Trim();
@@ -28,6 +48,6 @@ public sealed class ApiKeyStorageService
     /// <summary>
     /// Checks whether the API key file exists.
     /// </summary>
-    public bool Exists() => File.Exists(FileName);
+    public bool Exists() => File.Exists(_filePath);
 }
 
