@@ -15,6 +15,28 @@ public sealed class AnytypeService
         _client = new AnytypeClient(apiKey);
     }
 
+    /// <summary>
+    /// Checks whether the Anytype API is reachable using the current API key.
+    /// </summary>
+    /// <returns>True if the request succeeds; otherwise false.</returns>
+    public async Task<bool> PingAsync()
+    {
+        if (!IsAuthorized)
+        {
+            return false;
+        }
+
+        try
+        {
+            _ = await _client!.Spaces.ListAsync();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
     public async Task AddMovieAsync(Movie movie)
     {
         var spacesResponse = await _client.Spaces.ListAsync();
