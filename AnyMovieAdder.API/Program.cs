@@ -28,6 +28,16 @@ public class Program
 
         var app = builder.Build();
 
+        using var scope = app.Services.CreateScope();        
+        var anytypeService = scope.ServiceProvider.GetRequiredService<AnytypeService>();
+        var apiKeyStorage = scope.ServiceProvider.GetRequiredService<ApiKeyStorageService>();
+
+        if (!anytypeService.IsAuthorized && apiKeyStorage.Exists())
+        {
+            var key = apiKeyStorage.Load();
+            anytypeService.Authorize(key);
+        }        
+
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {

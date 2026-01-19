@@ -22,7 +22,7 @@ public class HealthController : ControllerBase
     {
         if (!anytypeService.IsAuthorized)
         {
-            return StatusCode(StatusCodes.Status503ServiceUnavailable, new
+            return StatusCode(StatusCodes.Status401Unauthorized, new
             {
                 status = "not ready",
                 reason = "unauthorized"

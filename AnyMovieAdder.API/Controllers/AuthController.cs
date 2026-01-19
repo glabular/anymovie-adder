@@ -40,7 +40,13 @@ public sealed class AuthController : ControllerBase
                 return BadRequest("API key is missing.");
             }
 
-            _apiKeyStorage.Save(apiKey);
+            // Only save if new or different
+            var existingKey = _apiKeyStorage.Exists() ? _apiKeyStorage.Load() : null;
+            if (existingKey != apiKey)
+            {
+                _apiKeyStorage.Save(apiKey);
+            }
+
             _anytypeService.Authorize(apiKey);
 
             return Ok("Authorized successfully.");
