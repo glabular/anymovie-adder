@@ -34,5 +34,4 @@ public class HealthController : ControllerBase
             ? Ok()
             : StatusCode(StatusCodes.Status503ServiceUnavailable);
     }
-
 }
