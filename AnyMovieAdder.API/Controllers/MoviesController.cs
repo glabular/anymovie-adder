@@ -1,7 +1,6 @@
 ﻿using AnyMovieAdder.API.DTOs;
 using AnyMovieAdder.API.Models;
 using AnyMovieAdder.API.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnyMovieAdder.API.Controllers;

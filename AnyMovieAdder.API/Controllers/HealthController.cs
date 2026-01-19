@@ -18,16 +18,8 @@ public class HealthController : ControllerBase
     }
 
     [HttpGet("ready")]
-    public async Task<IActionResult> Ready(
-        [FromServices] AnytypeService anytypeService,
-        [FromServices] ApiKeyStorageService apiKeyStorage)
+    public async Task<IActionResult> Ready([FromServices] AnytypeService anytypeService)
     {
-        if (!anytypeService.IsAuthorized && apiKeyStorage.Exists())
-        {
-            var key = apiKeyStorage.Load();
-            anytypeService.Authorize(key);
-        }
-
         var reachable = anytypeService.IsAuthorized && await anytypeService.PingAsync();
 
         return reachable

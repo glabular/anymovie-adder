@@ -1,5 +1,4 @@
 ﻿using AnyMovieAdder.API.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AnyMovieAdder.API.Controllers;
