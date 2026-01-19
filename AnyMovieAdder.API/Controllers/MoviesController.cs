@@ -11,10 +11,18 @@ namespace AnyMovieAdder.API.Controllers;
 public sealed class MoviesController : ControllerBase
 {
     private AnytypeService _anytypeService;
+    private readonly ApiKeyStorageService _apiKeyStorage;
 
-    public MoviesController(AnytypeService anytypeService)
+    public MoviesController(AnytypeService anytypeService, ApiKeyStorageService apiKeyStorage)
     {
         _anytypeService = anytypeService ?? throw new ArgumentNullException(nameof(anytypeService));
+        _apiKeyStorage = apiKeyStorage ?? throw new ArgumentNullException(nameof(apiKeyStorage));
+
+        if (!_anytypeService.IsAuthorized && _apiKeyStorage.Exists())
+        {
+            var key = _apiKeyStorage.Load();
+            _anytypeService.Authorize(key);
+        }
     }
 
     [HttpPost]
