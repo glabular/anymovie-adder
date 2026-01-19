@@ -75,6 +75,12 @@ public sealed class MoviesController : ControllerBase
 
             var apiKey = value["Bearer ".Length..].Trim();
 
+            if (string.IsNullOrWhiteSpace(apiKey))
+            {
+                return BadRequest("API key is missing.");
+            }
+
+            _apiKeyStorage.Save(apiKey);
             _anytypeService.Authorize(apiKey);
 
             return Ok("Authorized successfully.");
