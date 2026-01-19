@@ -20,10 +20,37 @@ public class HealthController : ControllerBase
     [HttpGet("ready")]
     public async Task<IActionResult> Ready([FromServices] AnytypeService anytypeService)
     {
-        var reachable = anytypeService.IsAuthorized && await anytypeService.PingAsync();
+        if (!anytypeService.IsAuthorized)
+        {
+            return StatusCode(StatusCodes.Status503ServiceUnavailable, new
+            {
+                status = "not ready",
+                reason = "unauthorized"
+            });
+        }
 
-        return reachable
-            ? Ok()
-            : StatusCode(StatusCodes.Status503ServiceUnavailable);
+        bool reachable;
+        try
+        {
+            reachable = await anytypeService.PingAsync();
+        }
+        catch
+        {
+            reachable = false;
+        }
+
+        if (!reachable)
+        {
+            return StatusCode(StatusCodes.Status503ServiceUnavailable, new
+            {
+                status = "not ready",
+                reason = "anytype service unreachable"
+            });
+        }
+
+        return Ok(new
+        {
+            status = "ready"
+        });
     }
 }
