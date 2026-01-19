@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AnyMovieAdder.API.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AnyMovieAdder.API.Controllers;
 
@@ -15,4 +16,23 @@ public class HealthController : ControllerBase
             timestamp = DateTime.UtcNow
         });
     }
+
+    [HttpGet("ready")]
+    public async Task<IActionResult> Ready(
+        [FromServices] AnytypeService anytypeService,
+        [FromServices] ApiKeyStorageService apiKeyStorage)
+    {
+        if (!anytypeService.IsAuthorized && apiKeyStorage.Exists())
+        {
+            var key = apiKeyStorage.Load();
+            anytypeService.Authorize(key);
+        }
+
+        var reachable = anytypeService.IsAuthorized && await anytypeService.PingAsync();
+
+        return reachable
+            ? Ok()
+            : StatusCode(StatusCodes.Status503ServiceUnavailable);
+    }
+
 }
