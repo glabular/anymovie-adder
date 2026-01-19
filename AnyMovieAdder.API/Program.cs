@@ -24,6 +24,7 @@ public class Program
         });
 
         builder.Services.AddSingleton<AnytypeService>();
+        builder.Services.AddSingleton<ApiKeyStorageService>();
 
         var app = builder.Build();
 
