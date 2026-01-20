@@ -59,7 +59,15 @@ authorizeBtn.addEventListener("click", onAuthorizeClick);
 // Core UI actions
 // =======================
 
-function sendToAnytype() {
+type AddMovieRequest = {
+    title: string;
+    description: string;
+    releaseYear: number;
+    categories: string[];
+};
+
+
+async function sendToAnytype() {
     if (!isAuthorized) {
         showModal("API key required");
         return;
@@ -83,19 +91,35 @@ function sendToAnytype() {
 
     const categories = Array.from(checkboxes)
         .filter(cb => cb.checked)
-        .map(cb => cb.value);
+        .map(cb => cb.value);    
 
-    const movieData = {
-        titleEn: title,
+    const movieData: AddMovieRequest = {
+        title: title,
         description: desctiptionInput.value,
-        releaseYear: year,
+        releaseYear: Number(year),
         categories
     };
 
-    console.log(movieData);
+    try {
+        const res = await fetch(`${apiBase}/movies`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(movieData)
+        });
 
-    clearInput();
-    titleInput.focus();
+        if (!res.ok) {
+            showToast("Ошибка", "Failed to add movie");
+            return;
+        }
+
+        clearInput();
+        titleInput.focus();
+    }
+    catch {
+        showToast("Ошибка", "Network error");
+    }
 }
 
 function clearInput() {
