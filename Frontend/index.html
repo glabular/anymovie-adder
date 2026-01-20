@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
@@ -88,6 +88,24 @@
             <button id="add" type="button">Добавить</button>
           </div>
         </footer>
+      </div>
+    </div>
+
+    <!-- Modal overlay for API key -->
+    <div id="api-modal" class="modal">
+      <div class="modal-content">
+        <h2 class="modal-title">Enter your Anytype API Key</h2>
+
+        <input
+          id="api-key"
+          class="modal-input"
+          type="text"
+          placeholder="API Key"
+        />
+
+        <button id="authorize-btn" class="modal-button">Authorize</button>
+
+        <p id="modal-message" class="modal-message"></p>
       </div>
     </div>
   </body>
