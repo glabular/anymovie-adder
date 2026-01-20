@@ -6,7 +6,7 @@ public sealed class Movie
 
     public string? Description { get; set; }
 
-    public int ReleaseYear { get; set; }
+    public string? ReleaseYear { get; set; }
 
     public string[] Categories { get; set; } = [];
 }

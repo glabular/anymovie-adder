@@ -143,7 +143,7 @@ public sealed class AnytypeService
                 new
                 {
                     key = "66917458b2bb3b0c70440fdb", // Год выхода
-                    text = movie.ReleaseYear.ToString()
+                    text = movie.ReleaseYear
                 },
                 new
                 {

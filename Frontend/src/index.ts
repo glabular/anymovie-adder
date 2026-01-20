@@ -62,7 +62,7 @@ authorizeBtn.addEventListener("click", onAuthorizeClick);
 type AddMovieRequest = {
     title: string;
     description: string;
-    releaseYear: number;
+    releaseYear: string;
     categories: string[];
 };
 
@@ -96,7 +96,7 @@ async function sendToAnytype() {
     const movieData: AddMovieRequest = {
         title: title,
         description: desctiptionInput.value,
-        releaseYear: Number(year),
+        releaseYear: year,
         categories
     };
 
@@ -202,11 +202,9 @@ function hideSplash() {
 // =======================
 
 async function checkLive(): Promise<boolean> {
-    console.log("Runnung checkLive method before try");
-    
     try {
         const res = await fetch(`${apiBase}/health/live`);
-        console.log("Runnung checkLive method!");    
+        
         return res.ok;
     } catch {
         return false;

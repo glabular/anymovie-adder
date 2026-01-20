@@ -6,7 +6,7 @@ public sealed class AddMovieRequest
 
     public string? Description { get; init; }
 
-    public int ReleaseYear { get; init; }
+    public string? ReleaseYear { get; init; }
 
     public string[]? Categories { get; init; }
 }
