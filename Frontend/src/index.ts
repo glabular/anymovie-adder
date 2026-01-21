@@ -12,6 +12,8 @@ const checkboxes = document.querySelectorAll(
 
 const clearButton = document.getElementById("clear") as HTMLButtonElement;
 const addButton = document.getElementById("add") as HTMLButtonElement;
+const addButtonText = addButton.querySelector(".btn-text") as HTMLElement;
+const addButtonSpinner = addButton.querySelector(".btn-spinner") as HTMLElement;
 
 const toast = document.getElementById("toast");
 const toastTitle = toast?.querySelector(".toast-title");
@@ -100,7 +102,12 @@ async function sendToAnytype() {
         return;
     }
 
-    isSubmitting = true;   
+    isSubmitting = true;
+    addButton.disabled = true;
+    addButtonText.style.display = "none";
+    addButtonSpinner.style.display = "inline-block"; // show spinner
+
+    await new Promise(r => setTimeout(r, 50));
 
     try {
         const categories = Array.from(checkboxes)
@@ -134,6 +141,9 @@ async function sendToAnytype() {
     }
     finally {
         isSubmitting = false;
+        addButton.disabled = false;
+        addButtonSpinner.style.display = "none";
+        addButtonText.style.display = "inline";
     }
 }
 
