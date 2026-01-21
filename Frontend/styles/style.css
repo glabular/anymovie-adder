@@ -21,7 +21,10 @@ input:focus {
 .main-container {
     display: grid;
     grid-template-areas: "left right";
-    height: 500px;
+    height: 518px;
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
 }
 
 body {
