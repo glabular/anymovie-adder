@@ -130,7 +130,7 @@ async function sendToAnytype() {
         titleInput.focus();
     }
     catch {
-        showToast("Ошибка", "Network error");
+        showToast("Ошибка", "Failed to add movie");
     }
     finally {
         isSubmitting = false;
