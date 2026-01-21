@@ -27,11 +27,14 @@ const splashModal = document.getElementById("splash-modal") as HTMLDivElement;
 const splashTitle = document.getElementById("splash-title") as HTMLHeadingElement;
 const splashMessage = document.getElementById("splash-message") as HTMLParagraphElement;
 
+const form = document.getElementById("movie-form") as HTMLFormElement;
+
 // =======================
 // State
 // =======================
 
 let isAuthorized = false;
+let isSubmitting = false;
 let toastTimeout: number | undefined;
 
 const apiBase = "https://localhost:7185/api";
@@ -44,16 +47,21 @@ clearButton.addEventListener("click", clearInput);
 addButton.addEventListener("click", sendToAnytype);
 toastCloseButton.addEventListener("click", hideToast);
 
+authorizeBtn.addEventListener("click", onAuthorizeClick);
+
 [titleInput, desctiptionInput, yearInput].forEach(input => {
     input.addEventListener("keydown", e => {
         if (e.key === "Enter") {
             e.preventDefault();
-            sendToAnytype();
+            form.requestSubmit();
         }
     });
 });
 
-authorizeBtn.addEventListener("click", onAuthorizeClick);
+form.addEventListener("submit", e => {
+    e.preventDefault();
+    sendToAnytype();
+});
 
 // =======================
 // Core UI actions
@@ -66,8 +74,11 @@ type AddMovieRequest = {
     categories: string[];
 };
 
-
 async function sendToAnytype() {
+    if (isSubmitting) {
+        return;
+    }
+
     if (!isAuthorized) {
         showModal("API key required");
         return;
@@ -89,18 +100,19 @@ async function sendToAnytype() {
         return;
     }
 
-    const categories = Array.from(checkboxes)
+    isSubmitting = true;   
+
+    try {
+        const categories = Array.from(checkboxes)
         .filter(cb => cb.checked)
         .map(cb => cb.value);    
 
-    const movieData: AddMovieRequest = {
-        title: title,
-        description: desctiptionInput.value,
-        releaseYear: year,
-        categories
-    };
-
-    try {
+        const movieData: AddMovieRequest = {
+            title: title,
+            description: desctiptionInput.value,
+            releaseYear: year,
+            categories
+        };
         const res = await fetch(`${apiBase}/movies`, {
             method: "POST",
             headers: {
@@ -119,6 +131,9 @@ async function sendToAnytype() {
     }
     catch {
         showToast("Ошибка", "Network error");
+    }
+    finally {
+        isSubmitting = false;
     }
 }
 
@@ -204,7 +219,7 @@ function hideSplash() {
 async function checkLive(): Promise<boolean> {
     try {
         const res = await fetch(`${apiBase}/health/live`);
-        
+
         return res.ok;
     } catch {
         return false;
