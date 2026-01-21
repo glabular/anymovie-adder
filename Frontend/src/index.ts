@@ -38,6 +38,7 @@ const form = document.getElementById("movie-form") as HTMLFormElement;
 let isAuthorized = false;
 let isSubmitting = false;
 let toastTimeout: number | undefined;
+let minAddSpinnerTime = 100; // Minimum time to display the spinner on the Add button.
 
 const apiBase = "https://localhost:7185/api";
 
@@ -107,7 +108,7 @@ async function sendToAnytype() {
     addButtonText.style.display = "none";
     addButtonSpinner.style.display = "inline-block"; // show spinner
 
-    await new Promise(r => setTimeout(r, 50));
+    await new Promise(r => setTimeout(r, minAddSpinnerTime));
 
     try {
         const categories = Array.from(checkboxes)
