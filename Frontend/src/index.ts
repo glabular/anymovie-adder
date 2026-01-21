@@ -169,11 +169,14 @@ function isTitleValid(title: string): boolean {
 }
 
 function isYearValid(year: string): boolean {
-    if (year.trim() === "") {
+    const trimmedYear = year.trim();
+    
+    // empty year is allowed
+    if (trimmedYear === "") {
         return true;
     }
 
-    return /^\d{4}$/.test(year);
+    return /^\d{4}$/.test(trimmedYear);
 }
 
 // =======================
