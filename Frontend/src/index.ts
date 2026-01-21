@@ -38,7 +38,7 @@ const form = document.getElementById("movie-form") as HTMLFormElement;
 let isAuthorized = false;
 let isSubmitting = false;
 let toastTimeout: number | undefined;
-let minAddSpinnerTime = 100; // Minimum time to display the spinner on the Add button.
+let minAddSpinnerTime = 250; // Minimum time to display the spinner on the Add button.
 
 const apiBase = "https://localhost:7185/api";
 
@@ -106,9 +106,7 @@ async function sendToAnytype() {
     isSubmitting = true;
     addButton.disabled = true;
     addButtonText.style.display = "none";
-    addButtonSpinner.style.display = "inline-block"; // show spinner
-
-    await new Promise(r => setTimeout(r, minAddSpinnerTime));
+    addButtonSpinner.style.display = "inline-block"; // show spinner    
 
     try {
         const categories = Array.from(checkboxes)
@@ -121,7 +119,12 @@ async function sendToAnytype() {
             releaseYear: year,
             categories
         };
-        const res = await fetch(`${apiBase}/movies`, {
+
+        const spinnerDelay = new Promise(resolve =>
+            setTimeout(resolve, minAddSpinnerTime)
+        );
+
+        const request = fetch(`${apiBase}/movies`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -129,10 +132,12 @@ async function sendToAnytype() {
             body: JSON.stringify(movieData)
         });
 
+        const [res] = await Promise.all([request, spinnerDelay]);
+
         if (!res.ok) {
             showToast("Ошибка", "Failed to add movie");
             return;
-        }
+        }    
 
         clearInput();
         titleInput.focus();
