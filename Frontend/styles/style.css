@@ -323,7 +323,7 @@ body {
     animation: spin 0.8s linear infinite;
 }
 
-#add {
+.btn-add {
     display: flex;
     align-items: center;
     justify-content: center;
