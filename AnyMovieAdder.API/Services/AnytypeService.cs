@@ -125,7 +125,7 @@ public sealed class AnytypeService
 
         var createObjectRequest = new CreateObjectRequest()
         {
-            Name = $"{movie.Title} created when testing API at {DateTime.Now:dd-MM-yyyy HH:mm}",
+            Name = movie.Title,
             TypeKey = movieTypeId!,
             TemplateId = templateId!,
             Properties =
