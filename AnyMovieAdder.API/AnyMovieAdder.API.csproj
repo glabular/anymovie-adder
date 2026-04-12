@@ -4,11 +4,30 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aa30bd8d-f0ec-4d69-b980-a533e55bc802</UserSecretsId>
+    <!-- wwwroot is populated at build time from ../Frontend; avoid SDK static asset graph on generated files -->
+    <StaticWebAssetsEnabled>false</StaticWebAssetsEnabled>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Anytype.NET" Version="3.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <FrontendDir>$(MSBuildThisFileDirectory)..\Frontend</FrontendDir>
+  </PropertyGroup>
+
+  <Target Name="CopyFrontendToOutputWwwroot" BeforeTargets="BeforeBuild">
+    <PropertyGroup>
+      <_OutWww>$(TargetDir)wwwroot</_OutWww>
+    </PropertyGroup>
+    <RemoveDir Directories="$(_OutWww)" Condition="Exists('$(_OutWww)')" />
+    <MakeDir Directories="$(_OutWww)" />
+    <Copy SourceFiles="$(FrontendDir)\index.html" DestinationFolder="$(_OutWww)" SkipUnchangedFiles="true" Condition="Exists('$(FrontendDir)\index.html')" />
+    <Exec Command="robocopy &quot;$(FrontendDir)\styles&quot; &quot;$(_OutWww)\styles&quot; /E /NFL /NDL /NJH /NJS /nc /ns /np" IgnoreExitCode="true" Condition="Exists('$(FrontendDir)\styles')" />
+    <Exec Command="robocopy &quot;$(FrontendDir)\dist&quot; &quot;$(_OutWww)\dist&quot; /E /NFL /NDL /NJH /NJS /nc /ns /np" IgnoreExitCode="true" Condition="Exists('$(FrontendDir)\dist')" />
+    <Exec Command="robocopy &quot;$(FrontendDir)\images&quot; &quot;$(_OutWww)\images&quot; /E /NFL /NDL /NJH /NJS /nc /ns /np" IgnoreExitCode="true" Condition="Exists('$(FrontendDir)\images')" />
+  </Target>
 
 </Project>

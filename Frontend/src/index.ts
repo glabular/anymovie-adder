@@ -31,6 +31,42 @@ const splashMessage = document.getElementById("splash-message") as HTMLParagraph
 
 const form = document.getElementById("movie-form") as HTMLFormElement;
 
+document.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+});
+
+document.addEventListener(
+    "dragstart",
+    (e) => {
+        e.preventDefault();
+    },
+    true
+);
+
+document.addEventListener(
+    "selectstart",
+    (e) => {
+        e.preventDefault();
+    },
+    true
+);
+
+const blockDrop = (e: Event) => {
+    e.preventDefault();
+};
+
+for (const type of ["dragenter", "dragover", "drop"] as const) {
+    document.addEventListener(type, blockDrop, true);
+}
+
+document.addEventListener("selectionchange", () => {
+    const sel = window.getSelection();
+    if (!sel || sel.rangeCount === 0 || sel.isCollapsed) {
+        return;
+    }
+    sel.removeAllRanges();
+});
+
 // =======================
 // State
 // =======================
@@ -40,7 +76,7 @@ let isSubmitting = false;
 let toastTimeout: number | undefined;
 let minAddSpinnerTime = 250; // Minimum time to display the spinner on the Add button.
 
-const apiBase = "https://localhost:7185/api";
+const apiBase = new URL("api", window.location.origin).href;
 
 // =======================
 // Event wiring

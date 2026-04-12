@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "AnyMovieAdder.Host": {
+      "commandName": "Project"
+    }
+  }
+}

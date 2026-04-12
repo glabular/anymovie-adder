@@ -1,0 +1,52 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <RootNamespace>AnyMovieAdder.Host</RootNamespace>
+    <AssemblyName>AnyMovieAdder.Host</AssemblyName>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>false</SelfContained>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2903.40" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AnyMovieAdder.API\AnyMovieAdder.API.csproj" />
+  </ItemGroup>
+
+  <Target Name="CopyApiWwwrootToHost" AfterTargets="Build">
+    <PropertyGroup>
+      <_ApiBin>$(MSBuildProjectDirectory)\..\AnyMovieAdder.API\bin\$(Configuration)\net10.0</_ApiBin>
+    </PropertyGroup>
+    <RemoveDir Directories="$(TargetDir)wwwroot" Condition="Exists('$(TargetDir)wwwroot')" />
+    <ItemGroup>
+      <_ApiWww Include="$(_ApiBin)\wwwroot\**\*" Condition="Exists('$(_ApiBin)\wwwroot')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_ApiWww)" DestinationFiles="@(_ApiWww->'$(TargetDir)wwwroot\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="CopyApiWwwrootOnPublish" AfterTargets="Publish">
+    <PropertyGroup>
+      <_ApiBin>$(MSBuildProjectDirectory)\..\AnyMovieAdder.API\bin\$(Configuration)\net10.0</_ApiBin>
+    </PropertyGroup>
+    <RemoveDir Directories="$(PublishDir)wwwroot" Condition="Exists('$(PublishDir)wwwroot')" />
+    <ItemGroup>
+      <_ApiWwwPub Include="$(_ApiBin)\wwwroot\**\*" Condition="Exists('$(_ApiBin)\wwwroot')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(_ApiWwwPub)" DestinationFiles="@(_ApiWwwPub->'$(PublishDir)wwwroot\%(RecursiveDir)%(Filename)%(Extension)')" SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>
