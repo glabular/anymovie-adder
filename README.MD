@@ -7,6 +7,10 @@ It is not intended to be used as-is, it will not work out of the box for other u
 
 Feel free to explore the code, reuse ideas, or adapt parts of it for your own projects.
 
+### Demo
+
+![Add movie flow](assets/demo1.gif)
+
 ### How it is structured
 
 - **AnyMovieAdder.Host** — Windows desktop shell (WinForms + WebView2). Starts the web server in-process and opens the UI at `https://127.0.0.1:7185/`.
@@ -51,6 +55,4 @@ Output is under `AnyMovieAdder.Host\bin\Release\net10.0-windows\win-x64\publish\
 
 The target machine needs the **.NET 10** runtime (desktop + ASP.NET) and the **WebView2** runtime; the build is not self-contained.
 
-### Demo
 
-![Add movie flow](assets/demo1.gif)
